@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "astral_alchemy",
+	"version": "${version}",
+	"name": "Astral Alchemy",
+	"description": "Astral Alchemy mod by C4Fey, based on C4Fey/Phrog0404/Ka1b21i's Fairy Life",
+	"authors": [
+		"C4Fey"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/astral_alchemy/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.c4fey.astral_alchemy.AstralAlchemy"
+		],
+		"fabric-datagen": [
+			"net.c4fey.astral_alchemy.AstralAlchemyDataGenerator"
+		],
+		"client": [
+			"net.c4fey.astral_alchemy.AstralAlchemyClient"
+		]
+	},
+	"mixins": [
+		"astral_alchemy.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
