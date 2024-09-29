@@ -1,5 +1,7 @@
 package net.c4fey.astral_alchemy;
 
+import net.c4fey.astral_alchemy.block.ModBlocks;
+import net.c4fey.astral_alchemy.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ public class AstralAlchemy implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 	}
 }
