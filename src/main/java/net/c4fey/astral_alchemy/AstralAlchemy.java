@@ -1,6 +1,7 @@
 package net.c4fey.astral_alchemy;
 
 import net.c4fey.astral_alchemy.block.ModBlocks;
+import net.c4fey.astral_alchemy.item.ModItemGroups;
 import net.c4fey.astral_alchemy.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
@@ -13,6 +14,7 @@ public class AstralAlchemy implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 	}

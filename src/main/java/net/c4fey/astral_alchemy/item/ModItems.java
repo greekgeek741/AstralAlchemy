@@ -9,6 +9,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModItems {
+
     // Elemental Essences
     public static final Item ASTRAL_ESSENCE = registerItem("astral_essence", new Item(new Item.Settings()));
     public static final Item VERNAL_ESSENCE = registerItem("vernal_essence", new Item(new Item.Settings()));
@@ -17,6 +18,9 @@ public class ModItems {
     public static final Item HIBERNAL_ESSENCE = registerItem("hibernal_essence", new Item(new Item.Settings()));
     public static final Item UMBRAL_ESSENCE = registerItem("umbral_essence", new Item(new Item.Settings()));
     public static final Item INFERNAL_ESSENCE = registerItem("infernal_essence", new Item(new Item.Settings()));
+
+    // Other Items
+    public static final Item AMETHYST_FLASK = registerItem("amethyst_flask", new Item(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(AstralAlchemy.MOD_ID, name), item);
