@@ -1,0 +1,34 @@
+{
+  "textures": {
+    "baseplate": "astral_alchemy:block/essence_distiller",
+    "particle": "astral_alchemy:block/essence_distiller"
+  },
+  "elements": [
+    {
+      "name": "baseplate",
+      "from": [0, 0, 0],
+      "to": [16, 2, 16],
+      "faces": {
+        "up": {"uv": [0, 0, 8, 8], "texture": "#baseplate"},
+        "down": {"uv": [0, 0, 8, 8], "texture": "#baseplate"},
+        "north": {"uv": [0, 8, 8, 9], "texture": "#baseplate"},
+        "east": {"uv": [0, 8, 8, 9], "texture": "#baseplate"},
+        "south": {"uv": [0, 8, 8, 9], "texture": "#baseplate"},
+        "west": {"uv": [0, 8, 8, 9], "texture": "#baseplate"}
+      }
+    },
+    {
+      "name": "furnace",
+      "from": [1, 2, 1],
+      "to": [9, 16, 9],
+      "faces": {
+        "up": {"uv": [12, 7, 16, 11], "texture": "#baseplate"},
+        "down": {"uv": [12, 7, 16, 11], "texture": "#baseplate"},
+        "north": {"uv": [12, 0, 16, 7], "texture": "#baseplate"},
+        "east": {"uv": [12, 0, 16, 7], "texture": "#baseplate"},
+        "south": {"uv": [8, 0, 12, 7], "texture": "#baseplate"},
+        "west": {"uv": [12, 0, 16, 7], "texture": "#baseplate"}
+      }
+    }
+  ]
+}

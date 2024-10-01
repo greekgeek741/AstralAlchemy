@@ -1,6 +1,7 @@
 package net.c4fey.astral_alchemy.block;
 
 import net.c4fey.astral_alchemy.AstralAlchemy;
+import net.c4fey.astral_alchemy.block.custom.EssenceDistillerBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -14,7 +15,7 @@ import net.minecraft.util.Identifier;
 public class ModBlocks {
 
     public static final Block ESSENCE_DISTILLER = registerBlock("essence_distiller",
-            new Block(AbstractBlock.Settings.create()));
+            new EssenceDistillerBlock(AbstractBlock.Settings.create()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
