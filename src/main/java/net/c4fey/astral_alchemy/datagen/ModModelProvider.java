@@ -1,6 +1,5 @@
 package net.c4fey.astral_alchemy.datagen;
 
-import net.c4fey.astral_alchemy.block.ModBlocks;
 import net.c4fey.astral_alchemy.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;

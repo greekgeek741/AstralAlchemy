@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 public class DistillingMap {
-    private Item input;
+    private final Item input;
     public ItemStack returnedOutput;
     public ItemStack distilledElement;
 
