@@ -30,5 +30,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.INFERNAL_ESSENCE, Models.GENERATED);
         // Other Items
         itemModelGenerator.register(ModItems.AMETHYST_FLASK, Models.GENERATED);
+        itemModelGenerator.register(ModItems.FERRIC_DUST, Models.GENERATED);
+        itemModelGenerator.register(ModItems.STARDUST, Models.GENERATED);
     }
 }
