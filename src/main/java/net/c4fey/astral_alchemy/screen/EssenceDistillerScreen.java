@@ -19,10 +19,29 @@ public class EssenceDistillerScreen extends HandledScreen<EssenceDistillerScreen
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         context.drawTexture(TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        /*
+        context.drawTexture(TEXTURE, this.x + 27, this.y + 37 + this.getScreenHandler().
+                        getBlockEntity().getFireSizeReverse(),
+                176, this.getScreenHandler().getBlockEntity().getFireSizeReverse(), 14,
+                this.getScreenHandler().getBlockEntity().getFireSize()); // fire
+        context.drawTexture(TEXTURE, this.x + 103, this.y + 17, 177, 14,
+                this.getScreenHandler().getBlockEntity().getArrowSize(), 16);
+        context.drawTexture(TEXTURE, this.x + 103, this.y + 53, 177, 14,
+                this.getScreenHandler().getBlockEntity().getArrowSize(), 16);
+         */
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        context.drawTexture(TEXTURE, this.x + 27, this.y + 37 + this.getScreenHandler().
+                        getBlockEntity().getFireSizeReverse(),
+                176, this.getScreenHandler().getBlockEntity().getFireSizeReverse(), 14,
+                this.getScreenHandler().getBlockEntity().getFireSize()); // fire
+        context.drawTexture(TEXTURE, this.x + 103, this.y + 17, 177, 14,
+                this.getScreenHandler().getBlockEntity().getArrowSize(), 16);
+        context.drawTexture(TEXTURE, this.x + 103, this.y + 53, 177, 14,
+                this.getScreenHandler().getBlockEntity().getArrowSize(), 16);
+
         super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }

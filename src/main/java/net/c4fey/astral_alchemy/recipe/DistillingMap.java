@@ -34,4 +34,13 @@ public class DistillingMap {
         }
         return null;
     }
+
+    public static boolean validDistillingInput(Item item) {
+        for (DistillingMap map : distillingMaps) {
+            if (map.input == item) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
