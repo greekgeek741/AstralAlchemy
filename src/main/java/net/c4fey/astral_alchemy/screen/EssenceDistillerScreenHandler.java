@@ -30,7 +30,7 @@ public class EssenceDistillerScreenHandler extends ScreenHandler {
 
         SimpleInventory inventory = this.blockEntity.getInventory();
         inventory.onOpen(playerInventory.player);
-        checkSize(inventory, 4);
+        checkSize(inventory, 6);
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
@@ -52,10 +52,12 @@ public class EssenceDistillerScreenHandler extends ScreenHandler {
     }
 
     private void addBlockInventory(SimpleInventory inventory) {
-        addSlot(new Slot(inventory, 0, 56, 53));
-        addSlot(new Slot(inventory, 1, 56, 17));
-        addSlot(new Slot(inventory, 2, 110, 17));
-        addSlot(new Slot(inventory, 3, 110, 53));
+        addSlot(new Slot(inventory, 0, 26, 53));
+        addSlot(new Slot(inventory, 1, 26, 17));
+        addSlot(new Slot(inventory, 2, 80, 17));
+        addSlot(new Slot(inventory, 3, 80, 53));
+        addSlot(new Slot(inventory, 4, 134, 17));
+        addSlot(new Slot(inventory, 5, 134, 53));
     }
 
     @Override
@@ -71,10 +73,10 @@ public class EssenceDistillerScreenHandler extends ScreenHandler {
         if (slot != null && slot.hasStack()) {
             ItemStack inSlot = slot.getStack();
             newStack = inSlot.copy();
-            if (slotIndex < 4) {
-                if (!insertItem(inSlot, 4, this.slots.size(), true)) return ItemStack.EMPTY;
-            } else if (slotIndex > 4) {
-                if (!insertItem(inSlot, 0, 4, false)) return ItemStack.EMPTY;
+            if (slotIndex < 6) {
+                if (!insertItem(inSlot, 6, this.slots.size(), true)) return ItemStack.EMPTY;
+            } else if (slotIndex > 6) {
+                if (!insertItem(inSlot, 0, 6, false)) return ItemStack.EMPTY;
             }
             if (inSlot.isEmpty())
                 slot.setStack(ItemStack.EMPTY);

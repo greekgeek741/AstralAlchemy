@@ -28,11 +28,14 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 public class EssenceDistillerBlockEntity extends BlockEntity implements TickableBlockEntity, ExtendedScreenHandlerFactory<BlockPosPayload> {
     public static final Text TITLE = Text.translatable("block.astral_alchemy.essence_distiller");
-    private final SimpleInventory inventory = new SimpleInventory(4) {
+    private final SimpleInventory inventory = new SimpleInventory(6) {
         @Override
         public void markDirty() {
             super.markDirty();
@@ -40,7 +43,7 @@ public class EssenceDistillerBlockEntity extends BlockEntity implements Tickable
         }
     };
     private final InventoryStorage inventoryStorage = InventoryStorage.of(inventory, null);
-    private int progress;
+    private int progress = 0;
 
     public EssenceDistillerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityTypes.ESSENCE_DISTILLER_BLOCK_ENTITY, pos, state);
@@ -50,23 +53,78 @@ public class EssenceDistillerBlockEntity extends BlockEntity implements Tickable
     public void tick() {
         if (this.world == null || this.world.isClient) return;
 
-        if (this.getInventory().heldStacks.get(0).getItem() == Items.SUGAR &&
-                this.getInventory().heldStacks.get(1).getItem() == Items.WATER_BUCKET &&
-                this.getInventory().heldStacks.get(3).getItem() == ModItems.AMETHYST_FLASK) {
-            DistillingMap distillingMap = DistillingMap.getDistillingMapFromInput(
-                    this.getInventory().heldStacks.get(2).getItem());
-            if (distillingMap != null) {
-                this.inventory.setStack(0, ItemStack.EMPTY);
+        if (this.progress == 0) {
+            if (this.canDistill() && this.inventory.getStack(0).getItem() == Items.SUGAR) {
+                this.progress = 1;
+                this.decreaseOrRemoveStack(0);
+            }
+        } else {
+            if (!this.canDistill()) {
+                this.progress--;
+                return;
+            }
+            this.progress++;
+            if (this.progress == 80) {
                 this.inventory.setStack(1, new ItemStack(Items.BUCKET));
-                this.inventory.setStack(2, distillingMap.returnedOutput.copy());
-                this.inventory.setStack(3, distillingMap.distilledElement.copy());
-                this.markDirty();
+                DistillingMap distillingMap = DistillingMap.getDistillingMapFromInput(
+                        this.inventory.getStack(2).getItem());
+                if (this.inventory.getStack(4) == ItemStack.EMPTY) {
+                    assert distillingMap != null;
+                    this.inventory.setStack(4, distillingMap.returnedOutput);
+                } else this.inventory.heldStacks.set(4,
+                        this.inventory.getStack(4).copyWithCount(
+                                this.inventory.getStack(4).getCount() + 1));
+                if (this.inventory.getStack(5) == ItemStack.EMPTY) {
+                    assert distillingMap != null;
+                    this.inventory.setStack(5, distillingMap.distilledElement);
+                } else this.inventory.heldStacks.set(5,
+                        this.inventory.getStack(5).copyWithCount(
+                                this.inventory.getStack(5).getCount() + 1));
+                this.decreaseOrRemoveStack(2);
+                this.decreaseOrRemoveStack(3);
             }
         }
     }
 
+    public void decreaseOrRemoveStack(int stack) {
+        if (this.inventory.heldStacks.get(stack).getCount() == 1)
+            this.inventory.heldStacks.set(stack, ItemStack.EMPTY);
+        else this.inventory.heldStacks.set(stack,
+                this.inventory.heldStacks.get(stack).copyWithCount(
+                        this.inventory.heldStacks.get(stack).getCount() - 1));
+    }
+
+    private boolean canDistill() {
+        DistillingMap distillingMap = DistillingMap.getDistillingMapFromInput(
+                this.inventory.getStack(2).getItem());
+        if (distillingMap == null) {
+            return false;
+        }
+
+        boolean water = this.inventory.getStack(1).getItem() == Items.WATER_BUCKET;
+        boolean input = DistillingMap.validDistillingInput(this.inventory.getStack(2).getItem());
+        boolean flask = this.inventory.getStack(3).getItem() == ModItems.AMETHYST_FLASK;
+        boolean output = this.inventory.getStack(4).getItem() == distillingMap.returnedOutput.getItem() ||
+                this.inventory.getStack(4) == ItemStack.EMPTY;
+        boolean element = this.inventory.getStack(5).getItem() == distillingMap.distilledElement.getItem() ||
+                this.inventory.getStack(5) == ItemStack.EMPTY;
+        return water && input && flask && output && element;
+    }
+
     public int getProgress() {
         return this.progress;
+    }
+
+    public int getArrowSize() {
+        return MathHelper.ceil(MathHelper.clampedLerp(0, 22, this.progress));
+    }
+
+    public int getFireSize() {
+        return MathHelper.ceil(MathHelper.clampedLerp(0, 13, this.progress));
+    }
+
+    public int getFireSizeReverse() {
+        return 13 - getFireSize();
     }
 
     @Override
