@@ -1,7 +1,6 @@
 package net.c4fey.astral_alchemy.block;
 
 import net.c4fey.astral_alchemy.AstralAlchemy;
-import net.c4fey.astral_alchemy.block.custom.EssenceDistillerBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;

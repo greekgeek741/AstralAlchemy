@@ -21,6 +21,8 @@ public class ModItems {
 
     // Other Items
     public static final Item AMETHYST_FLASK = registerItem("amethyst_flask", new Item(new Item.Settings()));
+    public static final Item FERRIC_DUST = registerItem("ferric_dust", new Item(new Item.Settings()));
+    public static final Item STARDUST = registerItem("stardust", new Item(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(AstralAlchemy.MOD_ID, name), item);
@@ -30,13 +32,8 @@ public class ModItems {
         AstralAlchemy.LOGGER.info("Registering Mod Items for " + AstralAlchemy.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
-            entries.add(ASTRAL_ESSENCE);
-            entries.add(VERNAL_ESSENCE);
-            entries.add(TORRENTIAL_ESSENCE);
-            entries.add(FULMINAL_ESSENCE);
-            entries.add(HIBERNAL_ESSENCE);
-            entries.add(UMBRAL_ESSENCE);
-            entries.add(INFERNAL_ESSENCE);
+            entries.add(FERRIC_DUST);
+            entries.add(STARDUST);
         });
     }
 }
