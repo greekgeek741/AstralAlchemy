@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    " P ",
+    "A A",
+    " A "
+  ],
+  "result": {
+    "count": 3,
+    "id": "astral_alchemy:amethyst_flask"
+  }
+}
