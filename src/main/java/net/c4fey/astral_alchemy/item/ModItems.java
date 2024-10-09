@@ -4,6 +4,7 @@ import net.c4fey.astral_alchemy.AstralAlchemy;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.WrittenBookItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -23,6 +24,8 @@ public class ModItems {
     public static final Item AMETHYST_FLASK = registerItem("amethyst_flask", new Item(new Item.Settings()));
     public static final Item FERRIC_DUST = registerItem("ferric_dust", new Item(new Item.Settings()));
     public static final Item STARDUST = registerItem("stardust", new Item(new Item.Settings()));
+    public static final AlchemistsTomeItem ALCHEMISTS_TOME = (AlchemistsTomeItem) registerItem("alchemists_tome",
+            new AlchemistsTomeItem(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(AstralAlchemy.MOD_ID, name), item);

@@ -28,6 +28,7 @@ public class ModItemGroups {
                         entries.add(ModItems.INFERNAL_ESSENCE);
                         entries.add(ModItems.FERRIC_DUST);
                         entries.add(ModItems.STARDUST);
+                        entries.add(ModItems.ALCHEMISTS_TOME);
                     }).build());
     public static final ItemGroup ASTRAL_ALCHEMY_BLOCKS_GROUP = Registry.register(Registries.ITEM_GROUP,
             Identifier.of(AstralAlchemy.MOD_ID, "astral_alchemy_blocks"),
