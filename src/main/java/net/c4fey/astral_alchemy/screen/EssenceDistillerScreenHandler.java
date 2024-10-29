@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
@@ -15,18 +17,22 @@ public class EssenceDistillerScreenHandler extends ScreenHandler {
 
     private final EssenceDistillerBlockEntity blockEntity;
     private final ScreenHandlerContext context;
+    private final PropertyDelegate propertyDelegate;
 
     // Client constructor
     public EssenceDistillerScreenHandler(int syncId, PlayerInventory playerInventory, BlockPosPayload payload) {
-        this(syncId, playerInventory, (EssenceDistillerBlockEntity) playerInventory.player.getWorld().getBlockEntity(payload.pos()));
+        this(syncId, playerInventory, (EssenceDistillerBlockEntity) playerInventory.player.getWorld()
+                .getBlockEntity(payload.pos()), new ArrayPropertyDelegate(1));
     }
 
     // Main constructor - called from server and by client constructor
-    public EssenceDistillerScreenHandler(int syncId, PlayerInventory playerInventory, EssenceDistillerBlockEntity blockEntity) {
+    public EssenceDistillerScreenHandler(int syncId, PlayerInventory playerInventory, EssenceDistillerBlockEntity blockEntity,
+                                         PropertyDelegate propertyDelegate) {
         super(ModScreenHandlerTypes.ESSENCE_DISTILLER, syncId);
 
         this.blockEntity = blockEntity;
         this.context = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());
+        this.propertyDelegate = propertyDelegate;
 
         SimpleInventory inventory = this.blockEntity.getInventory();
         inventory.onOpen(playerInventory.player);
@@ -35,6 +41,8 @@ public class EssenceDistillerScreenHandler extends ScreenHandler {
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
         addBlockInventory(inventory);
+
+        this.addProperties(propertyDelegate);
     }
 
     private void addPlayerInventory(PlayerInventory playerInventory) {
@@ -92,5 +100,9 @@ public class EssenceDistillerScreenHandler extends ScreenHandler {
 
     public EssenceDistillerBlockEntity getBlockEntity() {
         return this.blockEntity;
+    }
+
+    public int getProgress() {
+        return this.propertyDelegate.get(0);
     }
 }

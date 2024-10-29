@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BrewingStandBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -23,6 +24,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -44,9 +46,23 @@ public class EssenceDistillerBlockEntity extends BlockEntity implements Tickable
     };
     private final InventoryStorage inventoryStorage = InventoryStorage.of(inventory, null);
     private int progress = 0;
+    protected final PropertyDelegate propertyDelegate;
 
     public EssenceDistillerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityTypes.ESSENCE_DISTILLER_BLOCK_ENTITY, pos, state);
+        this.propertyDelegate = new PropertyDelegate() {
+            public int get(int index) {
+                return EssenceDistillerBlockEntity.this.progress;
+            }
+
+            public void set(int index, int value) {
+                EssenceDistillerBlockEntity.this.progress = value;
+            }
+
+            public int size() {
+                return 1;
+            }
+        };
     }
 
     @Override
@@ -115,18 +131,6 @@ public class EssenceDistillerBlockEntity extends BlockEntity implements Tickable
         return this.progress;
     }
 
-    public int getArrowSize() {
-        return MathHelper.ceil(MathHelper.clampedLerp(0, 22, this.progress));
-    }
-
-    public int getFireSize() {
-        return MathHelper.ceil(MathHelper.clampedLerp(0, 13, this.progress));
-    }
-
-    public int getFireSizeReverse() {
-        return 13 - getFireSize();
-    }
-
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         Inventories.writeNbt(nbt, this.inventory.getHeldStacks(), registryLookup);
@@ -156,7 +160,7 @@ public class EssenceDistillerBlockEntity extends BlockEntity implements Tickable
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new EssenceDistillerScreenHandler(syncId, playerInventory, this);
+        return new EssenceDistillerScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
     @Override

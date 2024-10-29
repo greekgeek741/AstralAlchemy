@@ -6,13 +6,16 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 public class EssenceDistillerScreen extends HandledScreen<EssenceDistillerScreenHandler> {
 
     private static final Identifier TEXTURE = Identifier.of(AstralAlchemy.MOD_ID,
             "textures/gui/container/essence_distiller.png");
-    // private static final Identifier FIRE = Identifier.of("minecraft:gui/sprites/lit_progress.png");
-    // private static final Identifier ARROW = Identifier.of("minecraft:gui/sprites/burn_progress.png");
+    private static final Identifier FIRE = Identifier.of(
+            "minecraft:textures/gui/sprites/container/furnace/lit_progress.png");
+    private static final Identifier ARROW = Identifier.of(
+            "minecraft:textures/gui/sprites/container/furnace/burn_progress.png");
 
     public EssenceDistillerScreen(EssenceDistillerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -22,19 +25,26 @@ public class EssenceDistillerScreen extends HandledScreen<EssenceDistillerScreen
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         context.drawTexture(TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
 
-        context.drawTexture(TEXTURE, this.x + 27, this.y + 37 + this.getScreenHandler().
-                        getBlockEntity().getFireSizeReverse(),
-                176, this.getScreenHandler().getBlockEntity().getFireSizeReverse(), 14,
-                this.getScreenHandler().getBlockEntity().getFireSize()); // fire
-        context.drawTexture(TEXTURE, this.x + 103, this.y + 17, 177, 14,
-                this.getScreenHandler().getBlockEntity().getArrowSize(), 16);
-        context.drawTexture(TEXTURE, this.x + 103, this.y + 53, 177, 14,
-                this.getScreenHandler().getBlockEntity().getArrowSize(), 16);
+        int p = ((EssenceDistillerScreenHandler) this.handler).getProgress();
+        context.drawTexture(FIRE, this.x + 27, this.y + 37 + 14 - flameClamp(p), 0,
+                14 - flameClamp(p), 14, flameClamp(p)); // fire
+        context.drawTexture(ARROW, this.x + 103, this.y + 17,
+                0, 0, arrowClamp(p), 16);
+        context.drawTexture(ARROW, this.x + 103, this.y + 53,
+                0, 0, arrowClamp(p), 16);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        drawMouseoverTooltip(context, mouseX, mouseY);
+        this.drawMouseoverTooltip(context, mouseX, mouseY);
+    }
+
+    private static int flameClamp(int p) {
+        return MathHelper.ceil(MathHelper.clampedLerp(0, 14, p));
+    }
+
+    private static int arrowClamp(int p) {
+        return MathHelper.ceil(MathHelper.clampedLerp(0, 22, p));
     }
 }
